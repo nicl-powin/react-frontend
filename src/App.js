@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { Routes, Route } from 'react-router-dom';
+
+import AppNavigation from './components/AppNavigation/AppNavigation';
+import Login from './modules/Login/Login';
+import Home from './modules/Home/Home';
 
 function App() {
+  const [ token, setToken ] = useState(false);
+
+  if (!token) return <Login setToken={ setToken } />
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <AppNavigation />
+      <AppContent>
+        <Routes>
+          <Route
+            path="/"
+            element={ <Home /> }
+          />
+        </Routes>
+      </AppContent>
+    </Container>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  display: flex;
+  flex: 1;
+`;
+const AppContent = styled.div`
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+`;
